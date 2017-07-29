@@ -1,4 +1,37 @@
+# Annotations API for Storybook #
+
+TBD Description 
+
+## API ##
+
+1. **`@storiesOf(storyKind, module)`**
+2. **`@add(storyName)`**
+3. **`@addDecorator(decorator, [arguments])`**
+4. **`build(descriptor)`**
+
+TBD
+
+## Installation ##
+
+TBD npm package
+
+TBD `babel-plugin-transform-decorators-legacy`
+
 ## Example ##
+
+### How to run ###
+
+```sh
+npm run storybook
+```
+
+or 
+
+```sh
+yarn storybook
+```
+
+### Example of the stories file ###
 
 ```js
 import React from 'react';
