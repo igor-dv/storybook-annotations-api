@@ -1,6 +1,6 @@
 # Annotations API for Storybook #
 
-TBD Description 
+Creating Storybook stories with es6 decorators.
 
 ## API ##
 
@@ -15,7 +15,15 @@ TBD
 
 TBD npm package
 
-TBD `babel-plugin-transform-decorators-legacy`
+Add [babel-plugin-transform-decorators-legacy](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy) to your babel configuration for Storybook.
+
+### For Example .babelrc ###
+
+```json
+{
+  "plugins": ["transform-decorators-legacy"]
+}
+```
 
 ## Example ##
 
