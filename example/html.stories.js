@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
 import React from 'react';
 import { withInfo } from '@storybook/addon-info';
 import { withNotes } from '@storybook/addon-notes';
@@ -6,54 +8,50 @@ import { build, addDecorator, add, storiesOf } from '../src';
 
 function externalDecorator(story) {
   return (
-    <div style={{fontSize: 'bold'}}>
+    <div style={{ fontSize: 'bold' }}>
       {story()}
     </div>
-  )
+  );
 }
 
 @storiesOf('basic.components.Html', module)
 @addDecorator(withKnobs)
 @addDecorator(externalDecorator)
-@addDecorator(story => (
-  <div style={{color: 'red'}}>
+@addDecorator(story =>
+  <div style={{ color: 'red' }}>
     {story()}
   </div>
-))
+)
 class HtmlStoriesDescriptor {
   @add('div story')
   addDivStory() {
     return (
-      <div>{text('div', 'div text')}</div>
+      <div>
+        {text('div', 'div text')}
+      </div>
     );
   }
 
   @add('span story')
   addSpanStory() {
-    return (
-      <span>span</span>
-    );
+    return <span>span</span>;
   }
 
   @add('section story')
   addSectionStory() {
-    return (
-      <section>section</section>
-    );
+    return <section>section</section>;
   }
 
   @add('anchor story')
-  @addDecorator(withInfo('Very useful anchor story', {inline: true}))
-  @addDecorator(withNotes({notes: 'Very useful anchor story'}))
+  @addDecorator(withInfo('Very useful anchor story', { inline: true }))
+  @addDecorator(withNotes({ notes: 'Very useful anchor story' }))
   addAnchorStory() {
-    return (
-      <a>anchor</a>
-    );
+    return <a>anchor</a>;
   }
 
   @add('table story')
-  @addDecorator(withInfo, 'Very useful table story 2', {inline: true})
-  @addDecorator(withNotes, {notes: 'Very useful table story 2'})
+  @addDecorator(withInfo, 'Very useful table story 2', { inline: true })
+  @addDecorator(withNotes, { notes: 'Very useful table story 2' })
   addTableStory() {
     return (
       <table>

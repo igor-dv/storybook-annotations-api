@@ -1,7 +1,4 @@
-const storiesMetadata = Symbol('stories metadata');
-const kindMetadata = Symbol('kind metadata');
+const storiesMetadataType = Symbol('stories metadata');
+const kindMetadataType = Symbol('kind metadata');
 
-export {
-  storiesMetadata,
-  kindMetadata
-}
+export { storiesMetadataType, kindMetadataType };

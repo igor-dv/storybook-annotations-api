@@ -1,17 +1,73 @@
-import { storiesMetadata, kindMetadata } from './types';
+import { storiesMetadataType, kindMetadataType } from './types';
+
+function storiesOf(storyKind, module) {
+  return target => {
+    const kindMetadata = getKindMetaData(target);
+    kindMetadata.storyKind = storyKind;
+    kindMetadata.module = module;
+  };
+}
+
+function add(storyName) {
+  return (target, key, descriptor) => {
+    const storiesMetadata = getStoriesMetaData(target);
+    const storyContext = getStoryContext(storiesMetadata, key);
+
+    storyContext.storyName = storyName;
+    storyContext.story = target[key];
+
+    return descriptor;
+  };
+}
+
+function addDecorator(decoratorFn, ...decoratorArgs) {
+  const decoratorWithArguments = bindArgumentsToDecorator(decoratorFn, decoratorArgs);
+
+  return (target, key, descriptor) => {
+    // class annotation
+    if (!key) {
+      const kindMetadata = getKindMetaData(target);
+      kindMetadata.decorators.push(decoratorWithArguments);
+      return null;
+    }
+
+    const storiesMetadata = getStoriesMetaData(target);
+    const storyContext = getStoryContext(storiesMetadata, key);
+    storyContext.decorators.push(decoratorWithArguments);
+
+    return descriptor;
+  };
+}
+
+function bindArgumentsToDecorator(decoratorFn, decoratorArgs) {
+  if (!decoratorArgs.length) {
+    return decoratorFn;
+  }
+
+  return decoratorFn.bind.apply(decoratorFn, [null, ...decoratorArgs])();
+}
 
 function getStoriesMetaData(target) {
-  return target[storiesMetadata] =
-    target[storiesMetadata] || {
-      stories: new Map()
-    };
+  return getMetadata(target, storiesMetadataType, () => ({
+    stories: new Map(),
+  }));
 }
 
 function getKindMetaData(target) {
-  return target[kindMetadata] =
-    target[kindMetadata] || {
-      decorators: []
-    };
+  return getMetadata(target, kindMetadataType, () => ({
+    decorators: [],
+  }));
+}
+
+function getMetadata(target, prop, defaultCreator) {
+  let metadata = target[prop];
+
+  if (!metadata) {
+    metadata = defaultCreator();
+    target[prop] = metadata;
+  }
+
+  return metadata;
 }
 
 function getStoryContext(metadata, key) {
@@ -26,62 +82,9 @@ function getStoryContext(metadata, key) {
 }
 
 function createEmptyStoryContext() {
-  let storyContext = new Object(null);
-  storyContext.decorators = [];
-
-  return storyContext;
+  return {
+    decorators: [],
+  };
 }
 
-function bindArgumentsToDecorator(decoratorFn, decoratorArgs) {
-  if(!decoratorArgs.length)
-    return decoratorFn;
-
-  return decoratorFn.bind.apply(decoratorFn, [null, ...decoratorArgs])();
-}
-
-function storiesOf(storyKind, module){
-  return function (target) {
-    const kindMetadata = getKindMetaData(target);
-    kindMetadata.storyKind = storyKind;
-    kindMetadata.module = module;
-  }
-}
-
-function add(storyName) {
-  return function (target, key, descriptor) {
-    const storiesMetadata = getStoriesMetaData(target);
-    const storyContext = getStoryContext(storiesMetadata, key);
-
-    storyContext.storyName = storyName;
-    storyContext.story = target[key];
-
-    return descriptor;
-  }
-}
-
-function addDecorator(decoratorFn) {
-  let decoratorArgs = [ ...arguments ];
-  decoratorArgs.shift();
-  const decoratorWithArguments = bindArgumentsToDecorator(decoratorFn, decoratorArgs);
-
-  return function (target, key, descriptor) {
-    // class annotation
-    if(!key) {
-      const kindMetadata = getKindMetaData(target);
-      kindMetadata.decorators.push(decoratorWithArguments);
-      return;
-    }
-
-    const storiesMetadata = getStoriesMetaData(target);
-    const storyContext = getStoryContext(storiesMetadata, key);
-    storyContext.decorators.push(decoratorWithArguments);
-
-    return descriptor;
-  }
-}
-
-export {
-  storiesOf,
-  add,
-  addDecorator
-};
+export { storiesOf, add, addDecorator };
