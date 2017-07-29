@@ -1,6 +1,15 @@
 import { storiesOf } from '@storybook/react';
 import { storiesMetadataType, kindMetadataType } from './types';
 
+function build(StoryDescriptor) {
+  const { storyKind, module, decorators } = StoryDescriptor[kindMetadataType];
+  const metadata = new StoryDescriptor()[storiesMetadataType];
+  const storiesHandler = storiesOf(storyKind, module);
+
+  attachCommonDecorators(storiesHandler, decorators);
+  attachStories(storiesHandler, metadata);
+}
+
 function attachCommonDecorators(storiesHandler, decorators) {
   if (!decorators || !decorators.length) {
     return;
@@ -15,6 +24,13 @@ function attachCommonDecorators(storiesHandler, decorators) {
   }, storiesHandler);
 }
 
+function attachStories(storiesHandler, metadata) {
+  Array.from(metadata.stories.values()).forEach(storyContext => {
+    const { storyName, story, decorators } = storyContext;
+    storiesHandler.add(storyName, decorateStory(story, decorators));
+  });
+}
+
 function decorateStory(story, decorators) {
   if (!decorators || !decorators.length) {
     return story;
@@ -27,22 +43,6 @@ function decorateStory(story, decorators) {
 
     return next(current);
   }, story);
-}
-
-function attachStories(storiesHandler, metadata) {
-  Array.from(metadata.stories.values()).forEach(storyContext => {
-    const { storyName, story, decorators } = storyContext;
-    storiesHandler.add(storyName, decorateStory(story, decorators));
-  });
-}
-
-function build(StoryDescriptor) {
-  const { storyKind, module, decorators } = StoryDescriptor[kindMetadataType];
-  const metadata = new StoryDescriptor()[storiesMetadataType];
-  const storiesHandler = storiesOf(storyKind, module);
-
-  attachCommonDecorators(storiesHandler, decorators);
-  attachStories(storiesHandler, metadata);
 }
 
 export { build };
