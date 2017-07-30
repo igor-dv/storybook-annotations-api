@@ -1,8 +1,8 @@
+src
+example
 node_modules
 *.log
-*.tgz
 .idea
-dist
 yarn.lock
 npm-shrinkwrap.json
 package-lock.json

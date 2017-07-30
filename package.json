@@ -9,7 +9,8 @@
     "babel": "babel src -d dist",
     "lint": "eslint .",
     "lint-fix": "npm run lint -- --fix",
-    "storybook": "start-storybook -c ./example/.storybook -p 9898"
+    "storybook": "start-storybook -c ./example/.storybook -p 9898",
+    "prepublish": "npm run lint && npm run babel"
   },
   "dependencies": {
     "@storybook/react": "3.2.0-alpha.11"
