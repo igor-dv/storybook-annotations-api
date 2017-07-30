@@ -1,6 +1,6 @@
 {
   "name": "storybook-annotations-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Annotations Api for Storybook",
   "license": "MIT",
   "main": "./dist/index.js",

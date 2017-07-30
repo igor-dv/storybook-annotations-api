@@ -13,11 +13,13 @@ TBD
 
 ## Installation ##
 
-TBD npm package
+```sh
+npm i -D storybook-annotations-api 
+```
 
 Add [babel-plugin-transform-decorators-legacy](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy) to your babel configuration for Storybook.
 
-### For Example .babelrc ###
+#### For Example .babelrc ####
 
 ```json
 {
@@ -31,12 +33,6 @@ Add [babel-plugin-transform-decorators-legacy](https://github.com/loganfsmyth/ba
 
 ```sh
 npm run storybook
-```
-
-or 
-
-```sh
-yarn storybook
 ```
 
 ### Example of the stories file ###
