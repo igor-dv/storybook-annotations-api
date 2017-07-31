@@ -42,7 +42,7 @@ import React from 'react';
 import { withInfo } from '@storybook/addon-info';
 import { withNotes } from '@storybook/addon-notes';
 import { withKnobs, text } from '@storybook/addon-knobs';
-import { build, addDecorator, add, storiesOf } from '../src';
+import { build, addDecorator, add, storiesOf } from 'storybook-annotations-api';
 
 function externalDecorator(story) {
   return (
@@ -83,8 +83,8 @@ class HtmlStoriesDescriptor {
   }
 
   @add('anchor story')
-  @addDecorator(withInfo('Very useful anchor story', {inline: true}))
-  @addDecorator(withNotes({notes: 'Very useful anchor story'}))
+  @addDecorator(withInfo({text: 'Very useful anchor story', inline: true}))
+  @addDecorator(withNotes({text: 'Very useful anchor story'}))
   addAnchorStory() {
     return (
       <a>anchor</a>
@@ -92,8 +92,8 @@ class HtmlStoriesDescriptor {
   }
 
   @add('table story')
-  @addDecorator(withInfo, 'Very useful table story 2', {inline: true})
-  @addDecorator(withNotes, {notes: 'Very useful table story 2'})
+  @addDecorator(withInfo, {text: 'Very useful table story 2', inline: true})
+  @addDecorator(withNotes, {text: 'Very useful table story 2'})
   addTableStory() {
     return (
       <table>
