@@ -43,28 +43,32 @@ class HtmlStoriesDescriptor {
   }
 
   @add('anchor story')
-  @addDecorator(withInfo('Very useful anchor story', { inline: true }))
-  @addDecorator(withNotes({ notes: 'Very useful anchor story' }))
+  @addDecorator(withInfo({ text: 'Very useful anchor story', inline: true }))
+  @addDecorator(withNotes({ text: 'Very useful anchor story' }))
   addAnchorStory() {
     return <a>anchor</a>;
   }
 
   @add('table story')
-  @addDecorator(withInfo, 'Very useful table story 2', { inline: true })
-  @addDecorator(withNotes, { notes: 'Very useful table story 2' })
+  @addDecorator(withInfo, { text: 'Very useful table story 2', inline: true })
+  @addDecorator(withNotes, { text: 'Very useful table story 2' })
   addTableStory() {
     return (
       <table>
-        <tr>
-          <td>1</td>
-          <td>2</td>
-          <td>3</td>
-        </tr>
-        <tr>
-          <td>a</td>
-          <td>b</td>
-          <td>c</td>
-        </tr>
+        <thead>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>a</td>
+            <td>b</td>
+            <td>c</td>
+          </tr>
+        </tbody>
       </table>
     );
   }
